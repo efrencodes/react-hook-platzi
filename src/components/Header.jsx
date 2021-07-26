@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import ThemeContext from '../context/ThemeContext'
 
 const Header = () => {
     // Constante de destructurar dos elementos
@@ -7,13 +8,15 @@ const Header = () => {
     // Podemos setear el estado inicial en useState()
     const [darkMode, setDarkMode] = useState(false)
 
+    const color = useContext(ThemeContext)
+
     const HandleClick = () => {
         // Setear el estado
         setDarkMode(!darkMode)
     }
     return (
         <div className="Header">
-            <h1>ReactHooks</h1>
+            <h1 style={{ color }} >ReactHooks</h1>
             <button
                 type="button"
                 onClick={HandleClick}
