@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/card.css'
 
-const Card = (props) => {
+const Card = props => {
     return (
         <div className="Card">
             <img src={props.image} alt={props.name} />

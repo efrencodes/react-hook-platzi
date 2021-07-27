@@ -1,16 +1,21 @@
 import React, {
     useState,
-    useEffect,
+    // useEffect,
     useReducer,
     useMemo,
-    useRef
+    useRef,
+    useCallback
 } from 'react'
 import Card from './Card'
+import Search from './Search'
+import useCharacters from '../hooks/useCharacters'
 import '../styles/characters.css'
 
 const initialState = {
     favorite: []
 }
+
+const API = 'https://rickandmortyapi.com/api/character/'
 
 const favoriteReducer = (state, action) => {
     switch (action.type) {
@@ -29,16 +34,18 @@ const favoriteReducer = (state, action) => {
 }
 
 const Characters = () => {
-    const [characters, setCharacters] = useState([])
+    // const [characters, setCharacters] = useState([])
     const [search, setSearch] = useState('')
     const [arrFavorites, dispatch] = useReducer(favoriteReducer, initialState)
     const searchInput = useRef(null)
 
-    useEffect(() => {
-        fetch('https://rickandmortyapi.com/api/character/')
-            .then(response => response.json())
-            .then(data => setCharacters(data.results))
-    }, [])
+    const characters = useCharacters(API)
+
+    // useEffect(() => {
+    //     fetch('https://rickandmortyapi.com/api/character/')
+    //         .then(response => response.json())
+    //         .then(data => setCharacters(data.results))
+    // }, [])
 
     const handleClick = favorite => {
         dispatch({
@@ -47,15 +54,21 @@ const Characters = () => {
         })
     }
 
-    const handleSearch = () => {
-        // setSearch(event.target.value)
+    // const handleSearch = () => {
+    //     // setSearch(event.target.value)
+    //     setSearch(searchInput.current.value)
+    // }
+
+    // useCallback
+    const handleSearch = useCallback(() => {
         setSearch(searchInput.current.value)
-    }
+    }, [])
 
     // const filteredUsers = characters.filter(user => {
     //     return user.name.toLowerCase().includes(search.toLowerCase())
     // })
 
+    // useMemo
     const filteredUsers = useMemo(() =>
         characters.filter(user => {
             return user.name.toLowerCase().includes(search.toLowerCase())
@@ -71,13 +84,11 @@ const Characters = () => {
                 </li>
             ))}
 
-            <div className="Search">
-                <input type="text"
-                    ref={searchInput}
-                    value={search}
-                    onChange={handleSearch}
-                />
-            </div>
+            <Search
+                searchInput={searchInput}
+                search={search}
+                handleSearch={handleSearch}
+            />
 
             {filteredUsers.map(character => (
                 <Card
