@@ -1,6 +1,7 @@
 import React from 'react'
 
-const Search = ({ searchInput, search, handleSearch }) => {
+const Search = props => {
+    const { searchInput, search, handleSearch } = props
     return (
         <div className="Search">
             <input type="text"

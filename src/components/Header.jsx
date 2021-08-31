@@ -4,7 +4,7 @@ import ThemeContext from '../context/ThemeContext'
 const Header = () => {
     // Constante de destructurar dos elementos
     // Primer:: es el estado
-    // Segundo:: es la función que va a cambiar el estado  
+    // Segundo:: es la función que va a cambiar el estado
     // Podemos setear el estado inicial en useState()
     const [darkMode, setDarkMode] = useState(false)
 
